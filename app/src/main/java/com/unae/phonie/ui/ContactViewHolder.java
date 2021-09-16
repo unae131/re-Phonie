@@ -63,6 +63,8 @@ class ContactViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, InfoActivity.class);
+                intent.putExtra("name", contact.getName());
+                intent.putExtra("phoneNum", contact.getPhoneNum());
                 context.startActivity(intent);
 
             }

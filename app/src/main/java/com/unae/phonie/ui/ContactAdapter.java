@@ -11,21 +11,14 @@ import com.unae.phonie.data.room.database.MyDatabase;
 import com.unae.phonie.databinding.ItemContactBinding;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
 
-    private List<Contact> itemList = Collections.emptyList();
+    private ArrayList<Contact> itemList = new ArrayList<Contact>();
 
     ContactAdapter(){
-//        itemList.add(new Contact("윤혜원", "010-6218-1172"));
-//        itemList.add(new Contact("곽용우", "010-3744-0834"));
-    }
-
-    public void init(List<Contact> list) {
-        itemList = list;
-        notifyDataSetChanged();
+        itemList.add(new Contact("윤혜원", "010-6218-1172"));
+        itemList.add(new Contact("곽용우", "010-3744-0834"));
     }
 
     @NonNull

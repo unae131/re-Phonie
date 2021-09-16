@@ -14,13 +14,11 @@ public abstract class MyDatabase extends RoomDatabase {
     public abstract ContactDao contactDao();
     private static MyDatabase instance = null;
 
-    public static void setInstance(Context context){
+    public static MyDatabase getInstance(Context context){
         if (instance == null){
-            instance = Room.databaseBuilder(context, MyDatabase.class, "Phone.db").build();
+            instance = Room.databaseBuilder(context.getApplicationContext(), MyDatabase.class, "Phone.db").allowMainThreadQueries().build();
         }
-    }
 
-    public static MyDatabase getInstance() {
         return instance;
     }
 }

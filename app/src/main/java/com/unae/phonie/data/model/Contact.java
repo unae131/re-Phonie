@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Phone")
 public class Contact {
     @PrimaryKey(autoGenerate = true) // id 자동 할당
-    private int id = 0;
+    private int id;
     private String name;
     private String phoneNum;
     private String image = "";
@@ -15,6 +15,7 @@ public class Contact {
         this.name = name;
         this.phoneNum = phoneNum;
     }
+
     public int getId() { return id; }
 
     public String getName() {

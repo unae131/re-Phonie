@@ -1,17 +1,17 @@
 package com.unae.phonie.ui;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.unae.phonie.R;
 import com.unae.phonie.data.model.Contact;
@@ -20,7 +20,6 @@ import com.unae.phonie.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    private MainViewModel vm;
     private ContactAdapter adapter;
 
     @Override
@@ -28,21 +27,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        MyDatabase.setInstance(this);
-
-        vm = new ViewModelProvider(this).get(MainViewModel.class);
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1001);
         }
 
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         binding.recyclerview.setAdapter(new ContactAdapter());
-        binding.mainFabAdd.setOnClickListener(v ->
-                vm.insert(new Contact("" + System.currentTimeMillis(), "0100000000"))
-        );
-
-        vm.getAll().observe(this, contacts -> adapter.init(contacts));
+        binding.mainFabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //MyDatabase.getInstance(MainActivity.this).contactDao().insertContact(
+                //        new Contact(""+System.currentTimeMillis(), "010-0000-0000"));
+            }
+        });
     }
 
     @Override
