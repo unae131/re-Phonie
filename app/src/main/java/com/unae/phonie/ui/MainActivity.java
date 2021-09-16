@@ -1,8 +1,10 @@
 package com.unae.phonie.ui;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +22,7 @@ import com.unae.phonie.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    private MainViewModel vm;
+    private ContactViewModel vm;
     private ContactAdapter adapter;
 
     @Override
@@ -30,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         MyDatabase.setInstance(this);
 
-        vm = new ViewModelProvider(this).get(MainViewModel.class);
+        vm = new ViewModelProvider(this).get(ContactViewModel.class);
 
-        adapter = new ContactAdapter();
+        adapter = new ContactAdapter(vm);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1001);
@@ -40,21 +42,22 @@ public class MainActivity extends AppCompatActivity {
 
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         binding.recyclerview.setAdapter(adapter);
-        binding.mainFabAdd.setOnClickListener(v ->
-                vm.insert(new Contact("" + System.currentTimeMillis(), "0100000000"))
-        );
+        binding.mainFabAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddActivity.class);
+//                vm.insert(new Contact("" + System.currentTimeMillis(), "0100000000"));
+            startActivity(intent);
+        });
 
         vm.getAll().observe(this, contacts -> adapter.init(contacts));
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case 1001:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                }
-                else{
+                } else {
                     Toast.makeText(this, "권한 허용이 필요합니다.", Toast.LENGTH_SHORT).show();
                 }
         }

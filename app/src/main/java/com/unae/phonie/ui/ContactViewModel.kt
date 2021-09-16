@@ -7,9 +7,10 @@ import com.unae.phonie.data.model.Contact
 import com.unae.phonie.data.repository.RoomRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class MainViewModel : ViewModel() {
+class ContactViewModel : ViewModel() {
     private val repository = RoomRepository()
 
     fun insert(contact: Contact) = viewModelScope.launch {
@@ -22,12 +23,16 @@ class MainViewModel : ViewModel() {
 
     fun getAll(): LiveData<List<Contact>> = repository.getAll()
 
-    fun getByName(name: String) = viewModelScope.launch {
-        repository.getByName(name)
+    fun getById(id: Int) : LiveData<Contact> = liveData<Contact> {
+        emit(repository.getById(id))
     }
 
-    fun getByNumber(number: String) = viewModelScope.launch {
-        repository.getByNumber(number)
+    fun getByName(name: String): LiveData<Contact> = liveData<Contact> {
+        emit(repository.getByName(name))
+    }
+
+    fun getByNumber(number: String): LiveData<Contact> = liveData<Contact> {
+        emit(repository.getByNumber(number))
     }
 
 }

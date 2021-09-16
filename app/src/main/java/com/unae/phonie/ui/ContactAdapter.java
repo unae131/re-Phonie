@@ -1,9 +1,11 @@
 package com.unae.phonie.ui;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.unae.phonie.data.model.Contact;
@@ -17,10 +19,10 @@ import java.util.List;
 class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
 
     private List<Contact> itemList = Collections.emptyList();
+    private ContactViewModel vm;
 
-    ContactAdapter(){
-//        itemList.add(new Contact("윤혜원", "010-6218-1172"));
-//        itemList.add(new Contact("곽용우", "010-3744-0834"));
+    public ContactAdapter(ContactViewModel vm){
+        this.vm = vm;
     }
 
     public void init(List<Contact> list) {
@@ -32,8 +34,10 @@ class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     @Override
     public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ContactViewHolder viewHolder = new ContactViewHolder(
-                ItemContactBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
+                ItemContactBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false),
+                vm
         );
+
         return viewHolder;
     }
 

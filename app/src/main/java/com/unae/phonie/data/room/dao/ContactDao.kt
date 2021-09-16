@@ -21,4 +21,8 @@ interface ContactDao {
 
     @Query("SELECT * from Phone where phoneNum like '%' || :phoneNum || '%'")
     suspend fun getByNumber(phoneNum: String): Contact
+
+    @Query("SELECT * from Phone where id = :id")
+    suspend fun getById(id: Int): Contact
+
 }
