@@ -19,7 +19,7 @@ class RoomRepository {
 
     suspend fun insert(contact: Contact) = dao.insertContact(contact)
     suspend fun delete(contact: Contact) = dao.deleteContact(contact)
-    suspend fun getAll() = dao.getAllContacts()
+    fun getAll() = dao.getAllContacts()
     suspend fun getByName(name: String) = dao.getByName(name)
     suspend fun getByNumber(number: String) = dao.getByNumber(number)
 }

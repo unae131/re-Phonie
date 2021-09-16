@@ -32,12 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
         vm = new ViewModelProvider(this).get(MainViewModel.class);
 
+        adapter = new ContactAdapter();
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1001);
         }
 
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        binding.recyclerview.setAdapter(new ContactAdapter());
+        binding.recyclerview.setAdapter(adapter);
         binding.mainFabAdd.setOnClickListener(v ->
                 vm.insert(new Contact("" + System.currentTimeMillis(), "0100000000"))
         );

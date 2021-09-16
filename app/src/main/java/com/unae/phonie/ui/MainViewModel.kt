@@ -20,10 +20,7 @@ class MainViewModel : ViewModel() {
         repository.delete(contact)
     }
 
-    fun getAll(): LiveData<List<Contact>> = liveData {
-        val list=repository.getAll()
-        Log.d("afdngjanfjg", list.value.toString())
-    }
+    fun getAll(): LiveData<List<Contact>> = repository.getAll()
 
     fun getByName(name: String) = viewModelScope.launch {
         repository.getByName(name)
