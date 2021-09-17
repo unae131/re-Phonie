@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.telephony.PhoneNumberUtils"/>
         <variable
             name="contact"
             type="com.unae.phonie.data.model.Contact" />
@@ -45,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/info_tv_name"
-                android:text="@{contact.phoneNum}"
+                android:text="@{PhoneNumberUtils.formatNumber(contact.phoneNum)}"
                 android:textSize="16dp"
                 />
 

@@ -1,6 +1,5 @@
 package com.unae.phonie.ui
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.unae.phonie.data.model.Contact
@@ -8,7 +7,6 @@ import com.unae.phonie.data.repository.RoomRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class ContactViewModel : ViewModel() {
     private val repository = RoomRepository()
@@ -23,16 +21,16 @@ class ContactViewModel : ViewModel() {
 
     fun getAll(): LiveData<List<Contact>> = repository.getAll()
 
-    fun getById(id: Int) : LiveData<Contact> = liveData<Contact> {
+    fun getById(id: Int): LiveData<Contact> = liveData<Contact> {
         emit(repository.getById(id))
     }
 
-    fun getByName(name: String): LiveData<Contact> = liveData<Contact> {
-        emit(repository.getByName(name))
+    fun getByName(name: String): List<Contact> = runBlocking {
+        repository.getByName(name)
     }
 
-    fun getByNumber(number: String): LiveData<Contact> = liveData<Contact> {
-        emit(repository.getByNumber(number))
+    fun getByNumber(number: String): List<Contact> = runBlocking {
+        repository.getByNumber(number)
     }
 
 }

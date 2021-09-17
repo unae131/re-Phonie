@@ -15,14 +15,13 @@ interface ContactDao {
     @Query("SELECT * from Phone")
     fun getAllContacts(): LiveData<List<Contact>>
 
-
-    @Query("SELECT * from Phone where name like '%' || :name || '%'")
-    suspend fun getByName(name: String): Contact
-
-    @Query("SELECT * from Phone where phoneNum like '%' || :phoneNum || '%'")
-    suspend fun getByNumber(phoneNum: String): Contact
-
     @Query("SELECT * from Phone where id = :id")
     suspend fun getById(id: Int): Contact
+
+    @Query("SELECT * from Phone where name like '%' || :name || '%'")
+    suspend fun getByName(name: String): List<Contact>
+
+    @Query("SELECT * from Phone where phoneNum like '%' || :phoneNum || '%'")
+    suspend fun getByNumber(phoneNum: String): List<Contact>
 
 }

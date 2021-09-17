@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private ContactAdapter adapter;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -33,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         MyDatabase.setInstance(this);
 
         vm = new ViewModelProvider(this).get(ContactViewModel.class);
-
         adapter = new ContactAdapter(vm);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -42,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         binding.recyclerview.setAdapter(adapter);
+
         binding.mainFabAdd.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddActivity.class);
-//                vm.insert(new Contact("" + System.currentTimeMillis(), "0100000000"));
             startActivity(intent);
         });
 
@@ -61,5 +68,15 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "권한 허용이 필요합니다.", Toast.LENGTH_SHORT).show();
                 }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_search:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

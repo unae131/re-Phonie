@@ -33,7 +33,7 @@ public class AddActivity extends AppCompatActivity {
         binding.addEtCall.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         binding.addTvCancel.setOnClickListener(v -> { finish();});
         binding.addTvSave.setOnClickListener(v -> {
-            Contact contact = new Contact(binding.addEtName.getText().toString(), binding.addEtCall.getText().toString());
+            Contact contact = new Contact(binding.addEtName.getText().toString(), binding.addEtCall.getText().toString().replace("-", ""));
             vm.insert(contact);
             Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
             finish();

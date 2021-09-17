@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+        <import type="android.telephony.PhoneNumberUtils" />
         <variable
             name="contact"
             type="com.unae.phonie.data.model.Contact" />
@@ -72,7 +73,7 @@
                 android:id="@+id/tv_pnum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{contact.phoneNum}"
+                android:text="@{PhoneNumberUtils.formatNumber(contact.phoneNum)}"
                 app:layout_constraintStart_toStartOf="@id/item_line2"
                 app:layout_constraintTop_toTopOf="parent" />
 
